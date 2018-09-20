@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="40dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    tools:context=".SignUpActivity">
+
+    <ImageView
+        android:id="@+id/propic_view"
+        android:layout_marginTop="10dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:onClick="chooseImage"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="select your rofile pic"
+        android:layout_gravity="center"
+        android:layout_marginBottom="40dp"
+        />
+
+    <EditText
+        android:paddingTop="4dp"
+        android:id="@+id/name_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Full Name"
+
+        />
+    <EditText
+        android:paddingTop="4dp"
+        android:id="@+id/email_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="E-Mail"
+        android:inputType="textEmailAddress"
+
+        />
+    <EditText
+        android:paddingTop="4dp"
+        android:id="@+id/password_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+
+        />
+    <EditText
+        android:paddingTop="4dp"
+        android:id="@+id/contact_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Emergency Contact"
+
+        />
+    <EditText
+        android:paddingTop="4dp"
+        android:id="@+id/address_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Address"
+
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:textAllCaps="false"
+        android:layout_gravity="center"
+        android:onClick="signUpUser"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Already registered ?"
+        android:layout_gravity="center"
+        />
+    <TextView
+        android:id="@+id/sign_up_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign In"
+        android:textSize="16sp"
+        android:textColor="#01579B"
+        android:layout_gravity="center"
+        android:onClick="goToLogIn"
+
+        />
+
+
+</LinearLayout>
