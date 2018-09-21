@@ -39,15 +39,16 @@ import java.util.List;
  */
 public class EventFragment extends Fragment {
 
-    FloatingActionButton floatingActionButton;
-    RecyclerView recyclerView;
+    private FloatingActionButton floatingActionButton;
+    private RecyclerView recyclerView;
 
-    List<EventInfo> eventInfoList = new ArrayList<EventInfo>();
-    EventRecyclerViewAdapter adapter;
+    private List<EventInfo> eventInfoList = new ArrayList<EventInfo>();
+    private EventRecyclerViewAdapter adapter;
 
-    FirebaseAuth auth;
-    FirebaseUser user;
-    DatabaseReference rootReference, eventReference;
+    private FirebaseAuth auth;
+    private FirebaseUser user;
+    private DatabaseReference rootReference, eventReference;
+
 
     public EventFragment() {
         // Required empty public constructor
@@ -69,10 +70,10 @@ public class EventFragment extends Fragment {
         recyclerView = converView.findViewById(R.id.event_recycler_view);
         recyclerView.hasFixedSize();
 
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         getAllEvents();
-
 
 
         DatabaseReference eventRef = rootReference.child("user").child(user.getUid()).child("event");
@@ -99,8 +100,6 @@ public class EventFragment extends Fragment {
         });
 
 
-
-
         //Toast.makeText(getActivity(), eventInfoList.get(0).getEventDestination(), Toast.LENGTH_SHORT).show();
 
 
@@ -117,8 +116,6 @@ public class EventFragment extends Fragment {
     }
 
     public void getAllEvents() {
-
-
 
 
     }

@@ -30,7 +30,7 @@
         android:id="@+id/expense_amount_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Expense Details"
+        android:hint="Expense Amount"
         android:padding="4dp"
         />
 

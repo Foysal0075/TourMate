@@ -35,8 +35,8 @@
         <ImageView
             android:id="@+id/moment_picture_view"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="center"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
             android:padding="8dp"
             />
 

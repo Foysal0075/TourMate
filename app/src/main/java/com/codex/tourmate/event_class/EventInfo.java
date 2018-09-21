@@ -1,6 +1,8 @@
 package com.codex.tourmate.event_class;
 
-public class EventInfo {
+import java.io.Serializable;
+
+public class EventInfo implements Serializable{
     private String fromDate;
     private String toDate;
     private String eventBudget;

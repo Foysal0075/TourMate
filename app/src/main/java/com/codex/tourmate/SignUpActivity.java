@@ -121,7 +121,7 @@ public class SignUpActivity extends AppCompatActivity {
                 Uri imageUri = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                    imageData = encodeImage(bitmap, Bitmap.CompressFormat.JPEG, 50);
+                    imageData = encodeImage(bitmap, Bitmap.CompressFormat.JPEG, 25);
                     proPicView.setImageBitmap(decodeImage(imageData));
 
                 } catch (IOException e) {

@@ -1,12 +1,9 @@
 package com.codex.tourmate;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,13 +12,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codex.tourmate.fragments.EventFragment;
-import com.codex.tourmate.fragments.MomentFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+   private ImageView imageView;
+   private TextView nameView,emailView;
+
+   FirebaseUser user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,14 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+        imageView = headerView.findViewById(R.id.profile_view);
+        nameView = headerView.findViewById(R.id.nameView);
+        emailView = headerView.findViewById(R.id.email_view);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        emailView.setText(user.getEmail());
+
 
         EventFragment eventFragment = new EventFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -105,7 +120,12 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_nearby) {
 
-        } else if (id == R.id.nav_about) {
+        } else if (id == R.id.nav_logout) {
+
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            auth.signOut();
+            Intent intent = new Intent(MainActivity.this,LogInActivity.class);
+            startActivity(intent);
 
         }
 
@@ -121,6 +141,9 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.event_container_layout,eventFragment);
         ft.commit();
     }
+
+
+
 
 
 }

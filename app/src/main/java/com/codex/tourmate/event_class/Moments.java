@@ -1,6 +1,12 @@
 package com.codex.tourmate.event_class;
 
-public class Moments {
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
+import java.io.Serializable;
+
+public class Moments implements Serializable{
     private String momentImage;
     private String momentCaption;
     private String momentKey;
@@ -36,5 +42,11 @@ public class Moments {
 
     public String getEventKey() {
         return eventKey;
+    }
+
+
+    public Bitmap retrieveMomentImage() {
+        byte[] bytes = Base64.decode(momentImage,0);
+        return BitmapFactory.decodeByteArray(bytes,0,bytes.length);
     }
 }

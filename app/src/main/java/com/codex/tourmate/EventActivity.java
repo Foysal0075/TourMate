@@ -8,14 +8,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import com.codex.tourmate.event_class.EventInfo;
 import com.codex.tourmate.fragments.ExpenseFragment;
 import com.codex.tourmate.fragments.MomentFragment;
 
 public class EventActivity extends AppCompatActivity {
 
-Button momentButton, expenseButton;
-
+    Button momentButton, expenseButton;
+    private EventInfo eventInfo;
 
 
     @Override
@@ -25,7 +27,21 @@ Button momentButton, expenseButton;
 
         momentButton = findViewById(R.id.momentFragment_button);
         expenseButton = findViewById(R.id.expense_frag_button);
-        loadExpenseList();
+
+        eventInfo = (EventInfo)getIntent().getSerializableExtra("event");
+
+        ExpenseFragment expenseFragment = new ExpenseFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        //Bundle bundle = new Bundle();
+        //bundle.putSerializable("expensefromevent",eventInfo);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.exp_moment_container_layout, expenseFragment);
+        transaction.commit();
+        //Toast.makeText(this, eventInfo.getEventDestination(), Toast.LENGTH_SHORT).show();
+        getIntent().putExtra("expensefromevent",eventInfo);
+        //getIntent().putExtra("fromeventactivity",eventInfo)
+
+
 
         momentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +65,7 @@ Button momentButton, expenseButton;
         FragmentManager fm = getSupportFragmentManager();
         Fragment momentFragment = new MomentFragment();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.exp_moment_container_layout,momentFragment);
+        ft.replace(R.id.exp_moment_container_layout, momentFragment);
         ft.commit();
 
 
@@ -60,7 +76,7 @@ Button momentButton, expenseButton;
         ExpenseFragment expenseFragment = new ExpenseFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.exp_moment_container_layout,expenseFragment);
+        transaction.replace(R.id.exp_moment_container_layout, expenseFragment);
         transaction.commit();
     }
 }

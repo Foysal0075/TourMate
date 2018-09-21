@@ -1,9 +1,11 @@
 package com.codex.tourmate.event_class;
 
-public class Expense {
+import java.io.Serializable;
+
+public class Expense implements Serializable{
     private String expenseDetails;
     private String expenseDateTime;
-    private Double expenseCost;
+    private String expenseCost;
     private String expenseKey;
     private String eventKey;
 
@@ -11,7 +13,7 @@ public class Expense {
     public Expense() {
     }
 
-    public Expense(String expenseDetails, String expenseDateTime, Double expenseCost, String expenseKey, String eventKey) {
+    public Expense(String expenseDetails, String expenseDateTime, String expenseCost, String expenseKey, String eventKey) {
         this.expenseDetails = expenseDetails;
         this.expenseDateTime = expenseDateTime;
         this.expenseCost = expenseCost;
@@ -23,12 +25,8 @@ public class Expense {
         return expenseDetails;
     }
 
-    public String getExpenseDate() {
-        return expenseDateTime;
-    }
-
     public String getExpenseCost() {
-        return String.valueOf(expenseCost);
+        return expenseCost;
     }
 
     public String getExpenseKey() {
