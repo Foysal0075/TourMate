@@ -14,6 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codex.tourmate.event_class.EventInfo;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -83,7 +86,19 @@ public class AddEventActivity extends AppCompatActivity {
                     String key = updateInfo.getEventKey();
                     if (!TextUtils.isEmpty(destination)&&!TextUtils.isEmpty(budget)&&!TextUtils.isEmpty(datefrom)&&!TextUtils.isEmpty(dateto)){
                         EventInfo eventInfo = new EventInfo(datefrom,dateto,budget,destination,key);
-                        rootref.child("user").child(user.getUid()).child("event").child(key).setValue(eventInfo);
+                        rootref.child("user").child(user.getUid()).child("event").child(key).setValue(eventInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                finish();
+                                Toast.makeText(AddEventActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                                Toast.makeText(AddEventActivity.this, "Failed, Try Again", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
 
                 }
@@ -101,12 +116,21 @@ public class AddEventActivity extends AppCompatActivity {
                         //budget = Double.valueOf(budgett);
                         String key = rootref.child("user").child(user.getUid()).push().getKey();
                         EventInfo eventInfo = new EventInfo(fDate, tDate, budgett, destination, key);
-                        rootref.child("user").child(user.getUid()).child("event").child(key).setValue(eventInfo);
-
-                        Toast.makeText(AddEventActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                        rootref.child("user").child(user.getUid()).child("event").child(key).setValue(eventInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                finish();
+                                Toast.makeText(AddEventActivity.this, "Event Created", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(AddEventActivity.this, "Failed, Try Again", Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                     }
-                    Toast.makeText(AddEventActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+
 
                 }
             });

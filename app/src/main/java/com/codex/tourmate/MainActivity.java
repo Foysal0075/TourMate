@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_events) {
             // Handle the camera action
            loadEventFragment();
-            Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+
 
         } else if (id == R.id.nav_moments) {
 
