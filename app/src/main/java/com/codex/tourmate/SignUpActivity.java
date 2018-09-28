@@ -1,5 +1,6 @@
 package com.codex.tourmate;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,6 +43,8 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseUser user;
     private DatabaseReference rootReference;
 
+    ProgressDialog dialog;
+
     private String imageData;
     private static final int IMAGE_REQUEST_CODE = 1;
     private String name, email, password, contactNo, address;
@@ -50,6 +54,8 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Signing Up");
 
         auth = FirebaseAuth.getInstance();
         rootReference = FirebaseDatabase.getInstance().getReference();
@@ -71,18 +77,30 @@ public class SignUpActivity extends AppCompatActivity {
         contactNo = contactEdit.getText().toString();
         address = addressEdit.getText().toString();
 
+        dialog.show();
         user = auth.getCurrentUser();
-        if (user != null) {
-            if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+        if (user == null) {
+            if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(contactNo) && !TextUtils.isEmpty(address) && proPicView.getDrawable() != null) {
                 auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                user = auth.getCurrentUser();
-                                if (user != null) {
-                                    Toast.makeText(SignUpActivity.this, user.getEmail(), Toast.LENGTH_SHORT).show();
-                                    createUserData();
+
+                                if (task.isSuccessful()){
+
+                                    user = auth.getCurrentUser();
+                                    if (user != null) {
+                                        Toast.makeText(SignUpActivity.this, user.getEmail(), Toast.LENGTH_SHORT).show();
+                                        createUserData();
+                                        dialog.dismiss();
+                                    }else {
+
+                                        dialog.dismiss();
+                                        Log.d("Response","Failed to create user :"+task.getException().getMessage());
+                                    }
+
                                 }
+
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -92,8 +110,7 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
             } else {
-                emailEdit.setError("Email can not be empty");
-                passEdit.setError("Password can not be empty");
+                Toast.makeText(this, "Fields can not be empty", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -147,23 +164,24 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void createUserData() {
-        if (user != null) {
-            if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(contactNo) && !TextUtils.isEmpty(address) && proPicView.getDrawable() != null) {
-                String key = rootReference.child("user").child(user.getUid()).push().getKey();
-                UserInformation userInformation = new UserInformation(name, contactNo, email, address, "skdfkdfb", imageData);
-                rootReference.child("user").child(user.getUid()).child("info").setValue(userInformation);
 
-                //rootReference.child("user").child(user.getUid());
-
-
-                Toast.makeText(this, user.getUid(), Toast.LENGTH_SHORT).show();
-
-            }else {
-                Toast.makeText(SignUpActivity.this, "Fields can not be empty", Toast.LENGTH_SHORT).show();
+        String key = rootReference.child("user").child(user.getUid()).push().getKey();
+        UserInformation userInformation = new UserInformation(name, contactNo, email, address, key, imageData);
+        rootReference.child("user").child(user.getUid()).child("info").setValue(userInformation).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Intent intent = new Intent(SignUpActivity.this,MainActivity.class);
+                startActivity(intent);
             }
-        }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SignUpActivity.this, "Failed ,Please try again", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-
+        //rootReference.child("user").child(user.getUid());
+        //Toast.makeText(this, user.getUid(), Toast.LENGTH_SHORT).show();
 
     }
 }

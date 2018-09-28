@@ -18,6 +18,7 @@
         android:layout_height="80dp"
         android:layout_gravity="center"
         android:onClick="chooseImage"
+        android:src="@drawable/profile"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -45,12 +46,13 @@
 
         />
     <EditText
+
         android:paddingTop="4dp"
         android:id="@+id/password_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
-
+        android:inputType="numberPassword"
         />
     <EditText
         android:paddingTop="4dp"

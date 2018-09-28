@@ -1,6 +1,7 @@
 package com.codex.tourmate.fragments;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -48,6 +49,7 @@ public class EventFragment extends Fragment {
     private FirebaseAuth auth;
     private FirebaseUser user;
     private DatabaseReference rootReference, eventReference;
+   private ProgressDialog progressDialog;
 
 
     public EventFragment() {
@@ -65,6 +67,8 @@ public class EventFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         rootReference = FirebaseDatabase.getInstance().getReference();
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading Events");
 
         floatingActionButton = converView.findViewById(R.id.addEventFloatButton);
         recyclerView = converView.findViewById(R.id.event_recycler_view);
@@ -76,6 +80,7 @@ public class EventFragment extends Fragment {
         getAllEvents();
 
 
+        progressDialog.show();
         DatabaseReference eventRef = rootReference.child("user").child(user.getUid()).child("event");
         eventRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -87,6 +92,7 @@ public class EventFragment extends Fragment {
                     eventInfoList.add(eventInfo);
                     adapter = new EventRecyclerViewAdapter(getContext(), eventInfoList);
                     recyclerView.setAdapter(adapter);
+                    progressDialog.dismiss();
 
                 }
 

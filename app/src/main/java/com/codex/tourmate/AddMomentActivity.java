@@ -40,6 +40,7 @@ public class AddMomentActivity extends AppCompatActivity {
     private Button loadImageButton, saveMomentButton;
     private Bitmap bitmap;
     private static final int LOAD_IMAGE_REQUEST = 7;
+    private static final int LOAD_CAMERA_REQUEST = 8;
     private String imageData;
 
     private FirebaseUser user;
@@ -152,29 +153,50 @@ public class AddMomentActivity extends AppCompatActivity {
         });
 
 
+        momentImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (intent.resolveActivity(getPackageManager())!=null){
+                    startActivityForResult(intent, LOAD_CAMERA_REQUEST);
+                }
+
+            }
+        });
+
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Uri uri = data.getData();
+        if(requestCode == LOAD_IMAGE_REQUEST && resultCode==RESULT_OK){
+            Uri uri = data.getData();
 
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-            imageData = encodeImage(bitmap);
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                imageData = encodeImage(bitmap,25);
+                momentImageView.setImageBitmap(decodeImage(imageData));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if (requestCode==LOAD_CAMERA_REQUEST && resultCode ==RESULT_OK){
+
+            Bundle extras = data.getExtras();
+            Bitmap bitmap = (Bitmap) extras.get("data");
+            imageData = encodeImage(bitmap,100);
             momentImageView.setImageBitmap(decodeImage(imageData));
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
 
 
     }
 
-    public String encodeImage(Bitmap bitmap) {
+    public String encodeImage(Bitmap bitmap,int quality) {
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, byteArrayOutputStream);
         return Base64.encodeToString(byteArrayOutputStream.toByteArray(), 0);
     }
 

@@ -47,7 +47,8 @@ public class ExpenseViewAdapter extends RecyclerView.Adapter<ExpenseViewAdapter.
     @Override
     public void onBindViewHolder(@NonNull ExpenseViewHolder holder, int position) {
         final Expense expense = expenseList.get(position);
-        holder.amountView.setText(expense.getExpenseCost());
+        String amount = expense.getExpenseCost()+" "+"TK";
+        holder.amountView.setText(amount);
         holder.dateView.setText(expense.getExpenseDateTime());
         holder.detailsView.setText(expense.getExpenseDetails());
 

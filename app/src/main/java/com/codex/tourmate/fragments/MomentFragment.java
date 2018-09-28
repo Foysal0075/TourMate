@@ -1,6 +1,7 @@
 package com.codex.tourmate.fragments;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -42,6 +43,7 @@ public class MomentFragment extends Fragment {
     List<Moments> momentsList = new ArrayList<>();
 
     EventInfo eventInfo = new EventInfo();
+    ProgressDialog progressDialog;
 
 
     public MomentFragment() {
@@ -57,7 +59,9 @@ public class MomentFragment extends Fragment {
 
         momentView = view.findViewById(R.id.moment_recycler_view);
         floatingActionButton = view.findViewById(R.id.addMomentFloatingButton);
+        progressDialog = new ProgressDialog(getContext());
 
+        progressDialog.setMessage("Loading Moments");
         eventInfo = (EventInfo) getActivity().getIntent().getSerializableExtra("expensefromevent");
 
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -67,6 +71,7 @@ public class MomentFragment extends Fragment {
         momentView.setLayoutManager(layoutManager);
         momentView.hasFixedSize();
 
+        progressDialog.show();
         momentReference = rootReference.child("user").child(user.getUid()).child("moment");
 
         Query query = momentReference.orderByChild("eventKey").equalTo(eventInfo.getEventKey());
@@ -81,6 +86,7 @@ public class MomentFragment extends Fragment {
 
                 MomentViewAdapter adapter = new MomentViewAdapter(momentsList, getActivity());
                 momentView.setAdapter(adapter);
+                progressDialog.dismiss();
 
             }
 

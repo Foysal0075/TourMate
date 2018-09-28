@@ -48,7 +48,8 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
-        holder.budget.setText(eventList.get(position).getEventBudget());
+        String budget = eventList.get(position).getEventBudget()+" "+"TK";
+        holder.budget.setText(budget);
         holder.from.setText(eventList.get(position).getFromDate());
         holder.to.setText(eventList.get(position).getToDate());
         holder.destination.setText(eventList.get(position).getEventDestination());

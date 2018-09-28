@@ -3,32 +3,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-   >
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <Button
+
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Expense"
-            android:id="@+id/expense_frag_button"
-            />
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/momentFragment_button"
+            <Button
+                android:id="@+id/expense_frag_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Expense" />
+
+            <View
+                android:background="@color/colorPrimary"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:id="@+id/expense"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_weight="1">
+
+            </View>
+
+
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Moments"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            />
+            <Button
+                android:id="@+id/momentFragment_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Moments"
+
+                />
+
+
+            <View
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:id="@+id/moment"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1">
+
+            </View>
+
+        </LinearLayout>
+
 
     </LinearLayout>
+
+
 
     <FrameLayout
         android:id="@+id/exp_moment_container_layout"

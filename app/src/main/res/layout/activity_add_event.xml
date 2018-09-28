@@ -9,6 +9,8 @@
     tools:context=".AddEventActivity">
 
 
+
+
     <EditText
         android:id="@+id/destination_edit"
         android:layout_width="match_parent"
@@ -26,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
-        android:hint="Estimated"
+        android:hint="Estimated Budget"
         android:layout_marginBottom="4dp"
         android:inputType="number"
         android:layout_marginStart="16dp"
@@ -39,7 +41,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
         android:hint="From Date"
-        android:textSize="17sp"
+        android:textSize="20sp"
         android:layout_marginBottom="4dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -51,7 +53,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
         android:hint="To Date"
-        android:textSize="17sp"
+        android:textSize="20sp"
         android:layout_marginBottom="4dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"

@@ -18,6 +18,7 @@ public class EventActivity extends AppCompatActivity {
 
     Button momentButton, expenseButton;
     private EventInfo eventInfo;
+    View moment,expense;
 
 
     @Override
@@ -27,7 +28,10 @@ public class EventActivity extends AppCompatActivity {
 
         momentButton = findViewById(R.id.momentFragment_button);
         expenseButton = findViewById(R.id.expense_frag_button);
+        moment = findViewById(R.id.moment);
+        expense = findViewById(R.id.expense);
 
+        moment.setVisibility(View.INVISIBLE);
         eventInfo = (EventInfo)getIntent().getSerializableExtra("event");
 
         ExpenseFragment expenseFragment = new ExpenseFragment();
@@ -62,6 +66,8 @@ public class EventActivity extends AppCompatActivity {
 
     public void loadMoments() {
 
+        expense.setVisibility(View.INVISIBLE);
+        moment.setVisibility(View.VISIBLE);
         FragmentManager fm = getSupportFragmentManager();
         Fragment momentFragment = new MomentFragment();
         FragmentTransaction ft = fm.beginTransaction();
@@ -73,6 +79,8 @@ public class EventActivity extends AppCompatActivity {
 
     public void loadExpenseList() {
 
+        moment.setVisibility(View.INVISIBLE);
+        expense.setVisibility(View.VISIBLE);
         ExpenseFragment expenseFragment = new ExpenseFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
